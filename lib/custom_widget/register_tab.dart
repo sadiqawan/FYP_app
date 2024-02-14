@@ -1,3 +1,4 @@
+import 'package:final_year_project/custom_widget/sigin_tab.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_button.dart';
@@ -66,8 +67,10 @@ class _RegisterTabState extends State<RegisterTab> {
                   height: 15,
                 ),
                 CustomButton(
-                  text: 'SIGN IN',
-                  onTap: () {},
+                  text: 'REGISTER',
+                  onTap: () {
+
+                  },
                   backgroundColor: Colors.black,
                   textStyle: const TextStyle(
                       color: Colors.white,
@@ -96,7 +99,8 @@ class _RegisterTabState extends State<RegisterTab> {
                 ),
                 CustomButton(
                     text: 'SIGN IN WITH FACEBOOK',
-                    onTap: () {},
+                    onTap: () {
+                    },
                     icon: Icons.facebook,
                     textStyle: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 18)),

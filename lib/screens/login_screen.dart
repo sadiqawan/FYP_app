@@ -24,17 +24,25 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
           centerTitle: true,
           title: const Text('HiFashion'),
-          bottom: const TabBar(tabs: [
+          bottom: const TabBar(
+              labelColor: Colors.black,
+             
+              tabs: [
             Tab(text: 'SIGN IN'),
             Tab(text: 'REGISTER'),
           ]),
         ),
         drawer: Drawer(
           child: ListView(
-            children: [],
+            children: const [],
           ),
         ),
-        body: TabBarView(children: [SignInTab(), RegisterTab()]),
+        body: const TabBarView(
+          children: [
+            SignInTab(),
+            RegisterTab(),
+          ],
+        ),
       ),
     );
   }

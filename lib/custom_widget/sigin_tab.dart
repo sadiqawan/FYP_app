@@ -1,3 +1,4 @@
+import 'package:final_year_project/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_button.dart';
@@ -60,7 +61,9 @@ class _SignInTabState extends State<SignInTab> {
                 ),
                 CustomButton(
                   text: 'SIGN IN',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+                  },
                   backgroundColor: Colors.black,
                   textStyle: const TextStyle(
                       color: Colors.white,
