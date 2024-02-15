@@ -1,5 +1,5 @@
 import 'package:final_year_project/custom_widget/custom_button.dart';
-import 'package:final_year_project/screens/my_account_screen.dart';
+import 'package:final_year_project/screens/my_account_screens/my_account_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {

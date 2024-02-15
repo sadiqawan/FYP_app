@@ -26,7 +26,6 @@ class _MyAccountState extends State<MyAccount> {
         padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
-
             const Center(
               child: Text(
                 'MY ACCOUNT',
@@ -74,34 +73,40 @@ class _MyAccountState extends State<MyAccount> {
                     ),
                   ]),
             ),
-            const   Divider( color: Colors.black,),
-
+            const Divider(
+              color: Colors.black,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                IconButton(onPressed: (){}, icon: const Icon(FontAwesomeIcons.twitter),),
-                IconButton(onPressed: (){}, icon: const Icon(FontAwesomeIcons.instagram),),
-                IconButton(onPressed: (){}, icon: const Icon(FontAwesomeIcons.youtube),),
-
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(FontAwesomeIcons.twitter),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(FontAwesomeIcons.instagram),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(FontAwesomeIcons.youtube),
+                ),
               ],
             ),
-          const   Divider( color: Colors.black,),
-          const  Text('support@email.com'),
-           const Text('+9211111111'),
+            const Divider(
+              color: Colors.black,
+            ),
+            const Text('support@email.com'),
+            const Text('+92-11111111'),
             const Text('8:00 - 12:00 EVERYDAY'),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                TextButton(onPressed: (){}, child: const Text('ABOUT')),
-                TextButton(onPressed: (){}, child: const Text('CONTACT')),
-                TextButton(onPressed: (){}, child: const Text('BLOG')),
-
+                TextButton(onPressed: () {}, child: const Text('ABOUT')),
+                TextButton(onPressed: () {}, child: const Text('CONTACT')),
+                TextButton(onPressed: () {}, child: const Text('BLOG')),
               ],
             ),
-
-
-
           ],
         ),
       ),

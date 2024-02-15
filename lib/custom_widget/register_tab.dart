@@ -1,4 +1,4 @@
-import 'package:final_year_project/custom_widget/sigin_tab.dart';
+
 import 'package:flutter/material.dart';
 
 import 'custom_button.dart';
@@ -49,7 +49,7 @@ class _RegisterTabState extends State<RegisterTab> {
                 ),
                 TextField(
                   controller: emailC,
-                  decoration: const InputDecoration(hintText: 'Email Adress'),
+                  decoration: const InputDecoration(hintText: 'Email Address'),
                 ),
                 const SizedBox(
                   height: 15,
@@ -69,7 +69,6 @@ class _RegisterTabState extends State<RegisterTab> {
                 CustomButton(
                   text: 'REGISTER',
                   onTap: () {
-
                   },
                   backgroundColor: Colors.black,
                   textStyle: const TextStyle(
