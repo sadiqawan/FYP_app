@@ -1,7 +1,7 @@
 import 'package:final_year_project/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'custom_button.dart';
+import 'login_custom_button.dart';
 
 class SignInTab extends StatefulWidget {
   const SignInTab({super.key});

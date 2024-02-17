@@ -1,4 +1,5 @@
-import 'package:final_year_project/custom_widget/custom_button.dart';
+import 'package:final_year_project/custom_widget/login_custom_button.dart';
+import 'package:final_year_project/screens/home_screens/home_page.dart';
 import 'package:final_year_project/screens/my_account_screens/my_account_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -40,6 +41,7 @@ class WelcomeScreen extends StatelessWidget {
               backgroundColor: Colors.black,
               textStyle: const  TextStyle(color: Colors.white),
               onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage() ));
 
               },
             )

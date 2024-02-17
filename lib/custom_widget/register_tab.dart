@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'custom_button.dart';
+import 'login_custom_button.dart';
 
 class RegisterTab extends StatefulWidget {
   const RegisterTab({super.key});

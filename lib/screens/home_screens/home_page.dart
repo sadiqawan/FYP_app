@@ -1,4 +1,4 @@
-import 'package:final_year_project/custom_widget/custom_button.dart';
+import 'package:final_year_project/custom_widget/login_custom_button.dart';
 import 'package:final_year_project/screens/home_screens/new_arrival_screen_1.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,16 +10,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: AppBar(
-          // actions: [
-          //   IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-          //   IconButton(
-          //       onPressed: () {},
-          //       icon: const Icon(Icons.shopping_bag_outlined)),
-          // ],
-          centerTitle: true,
-          title: const Text('HiFashion',style: TextStyle(fontWeight: FontWeight.bold),),
-        ),
+        centerTitle: true,
+        title: const Text('HiFashion',style: TextStyle(fontWeight: FontWeight.bold),),
       ),
       body: Container(
         decoration: const BoxDecoration(
