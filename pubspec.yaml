@@ -38,6 +38,15 @@ dependencies:
   google_fonts: ^6.1.0
   font_awesome_flutter: ^10.7.0
   onboarding: ^3.1.0
+  fluttertoast: ^8.2.4
+  gap: ^3.0.1
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.16.0
+  cloud_firestore: ^4.14.0
+  firebase_storage: ^11.6.0
+  image_picker: ^1.0.7
+  intl: ^0.19.0
+  flutter_spinkit: ^5.2.0
 
 dev_dependencies:
   flutter_test:

@@ -8,7 +8,6 @@ class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
-
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
@@ -24,10 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
           centerTitle: true,
           title: const Text('HiFashion'),
-          bottom: const TabBar(
-              labelColor: Colors.black,
-             
-              tabs: [
+          bottom: const TabBar(labelColor: Colors.black, tabs: [
             Tab(text: 'SIGN IN'),
             Tab(text: 'REGISTER'),
           ]),

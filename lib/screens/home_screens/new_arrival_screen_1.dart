@@ -22,7 +22,7 @@ class _NewArrivalScreen1State extends State<NewArrivalScreen1>
         appBar: AppBar(
           actions: [
             IconButton(onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyAccount()));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MyAccount()));
             }, icon: const Icon(Icons.person)),
             IconButton(
                 onPressed: () {},
@@ -48,7 +48,7 @@ class _NewArrivalScreen1State extends State<NewArrivalScreen1>
             children: const [],
           ),
         ),
-        body:   TabBarView(
+        body:   const TabBarView(
           children: [
 
           HomePageTabAll(),

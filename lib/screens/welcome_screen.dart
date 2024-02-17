@@ -34,14 +34,14 @@ class WelcomeScreen extends StatelessWidget {
                 textAlign: TextAlign.center,),
             ),
             SizedBox(
-              height: MediaQuery.sizeOf(context).height * 0.4,
+              height: MediaQuery.sizeOf(context).height * 0.5,
             ),
             CustomButton(
-              text: 'SIGN IN',
+              text: 'CONTINUE',
               backgroundColor: Colors.black,
               textStyle: const  TextStyle(color: Colors.white),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage() ));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomePage() ));
 
               },
             )

@@ -1,9 +1,6 @@
 import 'package:final_year_project/custom_widget/login_custom_button.dart';
-import 'package:final_year_project/custom_widget/my_account_custom_buttons.dart';
 import 'package:final_year_project/models/onbording_screen_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePageTabAll extends StatefulWidget {
@@ -75,7 +72,7 @@ class _HomePageTabAllState extends State<HomePageTabAll> {
                 ),
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             SizedBox(
               height: 360,
               child: GridView(
@@ -111,7 +108,7 @@ class _HomePageTabAllState extends State<HomePageTabAll> {
 
                   ]),
             ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             CustomButton(
               text: 'EXPLORE  >',
               backgroundColor: Colors.black,
