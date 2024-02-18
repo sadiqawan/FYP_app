@@ -1,7 +1,8 @@
 
 import 'package:final_year_project/screens/home_screens/home_page_tab_all.dart';
-import 'package:final_year_project/screens/my_account_screens/my_account_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../my_profile_screens/my_account_screen.dart';
 
 class NewArrivalScreen1 extends StatefulWidget {
   const NewArrivalScreen1({Key? key}) : super(key: key);
