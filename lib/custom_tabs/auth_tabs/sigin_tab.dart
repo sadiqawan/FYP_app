@@ -1,10 +1,10 @@
 import 'package:final_year_project/screens/home_screens/home_page.dart';
-import 'package:final_year_project/screens/verification_screen.dart';
+import 'package:final_year_project/screens/auth_screen/verification_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'login_custom_button.dart';
+import '../../custom_widget/login_custom_button.dart';
 
 class SignInTab extends StatefulWidget {
   const SignInTab({super.key});

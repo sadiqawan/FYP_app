@@ -1,5 +1,5 @@
 
-import 'package:final_year_project/screens/home_screens/home_page_tab_all.dart';
+import 'package:final_year_project/custom_tabs/home_screen_tabs/home_page_tab_all.dart';
 import 'package:flutter/material.dart';
 
 import '../my_profile_screens/my_account_screen.dart';
@@ -39,8 +39,6 @@ class _NewArrivalScreen1State extends State<NewArrivalScreen1>
                 Tab(text: 'Appeal'),
                 Tab(text: 'T-shart'),
                 Tab(text: 'T-shart'),
-
-
 
               ]),
         ),

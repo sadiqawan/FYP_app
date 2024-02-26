@@ -1,5 +1,5 @@
-import 'package:final_year_project/custom_widget/register_tab.dart';
-import 'package:final_year_project/custom_widget/sigin_tab.dart';
+import 'package:final_year_project/custom_tabs/auth_tabs/register_tab.dart';
+import 'package:final_year_project/custom_tabs/auth_tabs/sigin_tab.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {

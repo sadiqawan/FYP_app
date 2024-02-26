@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:final_year_project/screens/login_screen.dart';
+import 'package:final_year_project/screens/auth_screen/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'login_custom_button.dart';
+import '../../custom_widget/login_custom_button.dart';
 
 class RegisterTab extends StatefulWidget {
   const RegisterTab({super.key});
@@ -18,12 +18,13 @@ class _RegisterTabState extends State<RegisterTab> {
   String? emailC, passwordC, nameC;
   bool obscureText = true;
 
-  @override
-  void setState(VoidCallback fn) {
-    emailC;
-    passwordC;
-    nameC;
-    super.setState(fn);
+ @override
+  void initState() {
+  emailC;
+  passwordC;
+  nameC;
+  obscureText;
+    super.initState();
   }
 
   @override
@@ -31,6 +32,7 @@ class _RegisterTabState extends State<RegisterTab> {
     emailC;
     passwordC;
     nameC;
+    obscureText;
     super.dispose();
   }
 
@@ -62,10 +64,13 @@ class _RegisterTabState extends State<RegisterTab> {
                   height: 25,
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(hintText: 'First name'),
+
+                  decoration: const InputDecoration(hintText: 'First name',
+                  prefixIcon: Icon(Icons.person)
+                  ),
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Please provide value';
+                      return 'Please provide name';
                     }
                     nameC = text.trim();
                     return null;
@@ -147,7 +152,7 @@ class _RegisterTabState extends State<RegisterTab> {
                           Fluttertoast.showToast(msg: 'Success', fontSize: 30);
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                                  builder: (context) => const LoginScreen()));
                         }
                       }
                     } on FirebaseAuthException catch (e) {
