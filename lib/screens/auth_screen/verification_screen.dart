@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:final_year_project/custom_widget/login_custom_button.dart';
-import 'package:final_year_project/screens/home_screens/home_page.dart';
+import 'package:final_year_project/screens/home_screens/home_splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -36,7 +36,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     if (FirebaseAuth.instance.currentUser!.emailVerified) {
       timer!.cancel();
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const HomePage()));
+          MaterialPageRoute(builder: (context) => const HomeSpashScreen()));
     }
   }
 

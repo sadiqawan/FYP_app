@@ -1,10 +1,11 @@
 import 'package:final_year_project/custom_widget/login_custom_button.dart';
-import 'package:final_year_project/screens/home_screens/new_arrival_screen_1.dart';
+import 'package:final_year_project/screens/home_screens/customer_home_screen.dart';
+import 'package:final_year_project/screens/home_screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomeSpashScreen extends StatelessWidget {
+  const HomeSpashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,10 @@ class HomePage extends StatelessWidget {
               CustomButton(
                 text: 'EXPLORE COLLECTION',
                 onTap: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const NewArrivalScreen1()));
+                  // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const NewArrivalScreen1()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                    return CustomerHomeScreen();
+                  }));
                 },
                 backgroundColor: Colors.black,
                 textStyle: const TextStyle(color: Colors.white),

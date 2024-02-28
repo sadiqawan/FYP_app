@@ -1,5 +1,5 @@
 import 'package:final_year_project/screens/auth_screen/login_screen.dart';
-import 'package:final_year_project/screens/home_screens/home_page.dart';
+import 'package:final_year_project/screens/home_screens/home_splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         ),
         home: (FirebaseAuth.instance.currentUser != null &&
                 FirebaseAuth.instance.currentUser!.emailVerified)
-            ? const HomePage()
+            ? const HomeSpashScreen()
             : const LoginScreen());
   }
 }
