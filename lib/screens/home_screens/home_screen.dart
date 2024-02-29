@@ -36,9 +36,9 @@ class _HomeScreenState extends State<HomeScreen>
 
               tabs: [
                 Tab(text: 'All'),
-                Tab(text: 'Appeal'),
+                Tab(text: 'Dress'),
                 Tab(text: 'T-shart'),
-                Tab(text: 'T-shart'),
+                Tab(text: 'Bags'),
 
               ]),
         ),

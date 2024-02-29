@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/custom_widget/login_custom_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:gap/gap.dart';
 
@@ -14,6 +17,13 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
+  // List<File> images = [];
+  List<String> photos = [];
+
+  List<String> listOfCategories = ['Dress', 'T-shart', 'Bags'];
+
+  String? _selectedCategory;
+
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
 
@@ -32,8 +42,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
   }
 
   File? _imageFile;
+  int counter = 0;
   DocumentSnapshot? userSnapshot;
   bool showLocalImage = false;
+
 // image picker
 
   Future<void> _pickImage(ImageSource source) async {
@@ -42,11 +54,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
     setState(() {
       if (pickedFile != null) {
         _imageFile = File(pickedFile.path);
-        setState(() {
-          showLocalImage = true;
-        });
+        showLocalImage = true;
       } else {
-        print('No image selected.');
+         print('No image selected.');
       }
     });
   }
@@ -54,16 +64,13 @@ class _AdminDashboardState extends State<AdminDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
+      appBar: AppBar(
         actions: [
-
-          IconButton(
-              onPressed: () {}, icon: const Icon(Icons.person)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.person)),
         ],
         centerTitle: true,
         title: const Text('AdminDashboard'),
       ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(18.0),
@@ -77,8 +84,27 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 ),
               ),
               const Gap(16),
+              DropdownButton<String>(
+                hint: const Text('Select a Category of product'),
+                isExpanded: true,
+                value: _selectedCategory,
+                items: listOfCategories.map((category) {
+                  return DropdownMenuItem<String>(
+                    value: category,
+                    child: Text(
+                        category), // Display category as text in the dropdown
+                  );
+                }).toList(),
+                onChanged: (selectedValue) {
+                  setState(() {
+                    _selectedCategory = selectedValue!;
+                  });
+                },
+              ),
+              const Gap(16),
               TextField(
                 controller: _descriptionController,
+                maxLines: 4,
                 decoration: const InputDecoration(
                   hintText: 'Description........',
                   suffixIcon: Icon(Icons.short_text_sharp),
@@ -89,23 +115,65 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 onPressed: () {
                   _pickImage(ImageSource.gallery);
                 },
-                icon: const Icon(Icons.file_present_sharp, size: 100,),
+                icon: const Icon(
+                  Icons.file_present_sharp,
+                  size: 100,
+                ),
               ),
               const Gap(16),
               _imageFile != null
                   ? Image.file(
-                _imageFile!,
-                height: 400,
-                width: 350,
-                fit: BoxFit.cover,
-              )
+                      _imageFile!,
+                      height: 400,
+                      width: 350,
+                      fit: BoxFit.cover,
+                    )
                   : Container(),
               const Gap(16),
-              CustomButton(text: 'Uploade', onTap: (){
+              CustomButton(
+                  text: 'Upload',
+                  onTap: () async {
+                    DocumentReference productRep =
+                        FirebaseFirestore.instance.collection('products').doc();
 
+                      await productRep.set({
+                        'title': _titleController.text.trim(),
+                        'category': _selectedCategory,
+                        'discrep': _descriptionController.text.trim(),
+                        'postedOn': DateTime.now().millisecondsSinceEpoch,
+                        'postedBy': FirebaseAuth.instance.currentUser!.uid,
+                        'postedByName':
+                            FirebaseAuth.instance.currentUser!.displayName,
+                      });
 
-              })
+                    // upload image to storage
+                    if (_imageFile != null) {
 
+                      await Future.forEach(_imageFile as Iterable<File>, (File image) async {
+                        String fileName = '${productRep.id}-$counter'; // Corrected the filename generation
+                        Reference reference = FirebaseStorage.instance
+                            .ref()
+                            .child('product_image')
+                            .child(fileName);
+                        UploadTask uploadTask = reference.putFile(
+                          _imageFile!,
+                          SettableMetadata(contentType: 'image/png'),
+                        );
+
+                        TaskSnapshot taskSnapshot =
+                            await uploadTask.whenComplete(() {});
+
+                        //get url of the image
+                        String url = await taskSnapshot.ref.getDownloadURL();
+                        photos.add(url);
+                        counter++;
+
+                      });
+                      // save these urls to firestore
+                      productRep.update({'productPhotos': photos});
+                      Fluttertoast.showToast(msg: 'Uploaded successfully');
+                    }
+                  })
             ],
           ),
         ),
