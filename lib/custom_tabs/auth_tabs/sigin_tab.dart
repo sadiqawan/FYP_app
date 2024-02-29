@@ -76,6 +76,7 @@ class _SignInTabState extends State<SignInTab> {
                   height: 25,
                 ),
                 TextFormField(
+                  obscureText: obscureText,
                   decoration: InputDecoration(
                     hintText: 'Password',
                     prefixIcon: const Icon(Icons.lock),
@@ -119,7 +120,7 @@ class _SignInTabState extends State<SignInTab> {
                         if (userCre.user!.emailVerified) {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                                builder: (context) => const HomeSpashScreen()),
+                                builder: (context) => const HomeSplashScreen()),
                           );
                         } else {
                           Navigator.of(context)

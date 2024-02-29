@@ -36,7 +36,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     if (FirebaseAuth.instance.currentUser!.emailVerified) {
       timer!.cancel();
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const HomeSpashScreen()));
+          MaterialPageRoute(builder: (context) => const HomeSplashScreen()));
     }
   }
 

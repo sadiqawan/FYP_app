@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 
 import 'home_screen.dart';
 
-class CustomerHomeScreen extends StatefulWidget {
-  const CustomerHomeScreen({super.key});
+class CustomerDashboard extends StatefulWidget {
+  const CustomerDashboard({super.key});
 
   @override
-  State<CustomerHomeScreen> createState() => _CustomerHomeScreenState();
+  State<CustomerDashboard> createState() => _CustomerDashboardState();
 }
 
-class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
+class _CustomerDashboardState extends State<CustomerDashboard> {
   List<Widget> pages = [
     HomeScreen(),
     BlogScreen(),

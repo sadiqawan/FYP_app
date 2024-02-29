@@ -4,8 +4,8 @@ import 'package:final_year_project/screens/home_screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomeSpashScreen extends StatelessWidget {
-  const HomeSpashScreen({super.key});
+class HomeSplashScreen extends StatelessWidget {
+  const HomeSplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class HomeSpashScreen extends StatelessWidget {
                 onTap: () {
                   // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const NewArrivalScreen1()));
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                    return CustomerHomeScreen();
+                    return CustomerDashboard();
                   }));
                 },
                 backgroundColor: Colors.black,

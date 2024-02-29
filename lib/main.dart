@@ -1,3 +1,4 @@
+import 'package:final_year_project/screens/admin_screen/admin_dashboard.dart';
 import 'package:final_year_project/screens/auth_screen/login_screen.dart';
 import 'package:final_year_project/screens/home_screens/home_splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,16 +25,36 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'FYP',
-        theme: ThemeData(
-          fontFamily: GoogleFonts.tenorSans().fontFamily,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: (FirebaseAuth.instance.currentUser != null &&
-                FirebaseAuth.instance.currentUser!.emailVerified)
-            ? const HomeSpashScreen()
-            : const LoginScreen());
+      debugShowCheckedModeBanner: false,
+      title: 'FYP',
+      theme: ThemeData(
+        fontFamily: GoogleFonts.tenorSans().fontFamily,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const  Scaffold(body: Center(child: CircularProgressIndicator()));
+          }
+          final user = snapshot.data;
+          if (user != null &&
+              user.email == 'awansadiq09@gmail.com' &&
+              user.emailVerified) {
+            return const AdminDashboard();
+          } else if (user != null && user.emailVerified) {
+            return const  HomeSplashScreen();
+          } else {
+            return const LoginScreen();
+          }
+        },
+      ),
+      // FirebaseAuth.instance.currentUser != null &&
+      //     FirebaseAuth.instance.currentUser!.emailVerified)
+      // ? const HomeSpashScreen()
+      // : const LoginScreen(),
+    );
   }
 }
