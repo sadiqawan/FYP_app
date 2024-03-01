@@ -164,44 +164,48 @@ class _AdminDashboardState extends State<AdminDashboard> {
               CustomButton(
                 text: 'Upload',
                 onTap: () async {
-                  DocumentReference productRep =
-                  FirebaseFirestore.instance.collection('products').doc();
+                 if(_titleController != null && _imageFile != null && _descriptionController != null && _selectedCategory !=null ){
+                   DocumentReference productRep =
+                   FirebaseFirestore.instance.collection('products').doc();
 
-                  await productRep.set({
-                    'title': _titleController.text.trim(),
-                    'category': _selectedCategory,
-                    'description': _descriptionController.text.trim(),
-                    'postedOn': DateTime
-                        .now()
-                        .millisecondsSinceEpoch,
-                    'postedBy': FirebaseAuth.instance.currentUser!.uid,
-                    'postedByName':
-                    FirebaseAuth.instance.currentUser!.displayName,
-                    'productImageUrl': null,
-                  });
+                   await productRep.set({
+                     'title': _titleController.text.trim(),
+                     'category': _selectedCategory,
+                     'description': _descriptionController.text.trim(),
+                     'postedOn': DateTime
+                         .now()
+                         .millisecondsSinceEpoch,
+                     'postedBy': FirebaseAuth.instance.currentUser!.uid,
+                     'postedByName':
+                     FirebaseAuth.instance.currentUser!.displayName,
+                     'productImageUrl': null,
+                   });
 
-                  // upload image to storage
-                  if (_imageFile != null) {
-                    // uplode to storage
-                    FirebaseStorage storage = FirebaseStorage.instance;
-                    var fileName = '${productRep.id}-$counter';
+                   // upload image to storage
+                   if (_imageFile != null) {
+                     // uplode to storage
+                     FirebaseStorage storage = FirebaseStorage.instance;
+                     var fileName = '${productRep.id}-$counter';
 
-                    UploadTask uploadTask = storage
-                        .ref()
-                        .child(fileName)
-                        .putFile(_imageFile!,
-                        SettableMetadata(contentType: 'image/png'));
-                    TaskSnapshot taskSnapshot =
-                    await uploadTask.whenComplete(() {});
-                    //get url of the image
-                    String url = await taskSnapshot.ref.getDownloadURL();
-                    print(url);
-                    counter++;
-                    // save these urls to firestore
-                    productRep.update({'productImageUrl': url});
-                    Fluttertoast.showToast(msg: 'Uploaded successfully');
-                    setState(() {});
-                  }
+                     UploadTask uploadTask = storage
+                         .ref()
+                         .child(fileName)
+                         .putFile(_imageFile!,
+                         SettableMetadata(contentType: 'image/png'));
+                     TaskSnapshot taskSnapshot =
+                     await uploadTask.whenComplete(() {});
+                     //get url of the image
+                     String url = await taskSnapshot.ref.getDownloadURL();
+                     print(url);
+                     counter++;
+                     // save these urls to firestore
+                     productRep.update({'productImageUrl': url});
+                     Fluttertoast.showToast(msg: 'Uploaded successfully');
+                     setState(() {});
+                   }
+                 }else {
+                   Fluttertoast.showToast(msg: 'Pleas provide the following given filled...');
+                 }
                 },
               ),
               const SizedBox(height: 10,),
