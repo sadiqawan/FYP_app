@@ -1,10 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:final_year_project/screens/home_screens/blog_screen.dart';
+import 'package:final_year_project/screens/util_screen/blog_screen.dart';
 import 'package:final_year_project/screens/home_screens/favrite_screen.dart';
 import 'package:final_year_project/screens/my_profile_screens/my_account_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'home_screen.dart';
+import 'home_screens/home_screen.dart';
 
 class CustomerDashboard extends StatefulWidget {
   const CustomerDashboard({super.key});
@@ -15,10 +15,10 @@ class CustomerDashboard extends StatefulWidget {
 
 class _CustomerDashboardState extends State<CustomerDashboard> {
   List<Widget> pages = [
-    HomeScreen(),
-    BlogScreen(),
-    FavriteScreen(),
-    MyAccount()
+    const HomeScreen(),
+    const BlogScreen(),
+    const FavriteScreen(),
+    const MyAccount()
   ];
 
   int _currentIndex = 0;
@@ -30,7 +30,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
           color: Colors.black,
           index: _currentIndex,
           backgroundColor: Colors.white,
-          items: [
+          items: const [
             Icon(
               Icons.home_filled,
               color: Colors.white,

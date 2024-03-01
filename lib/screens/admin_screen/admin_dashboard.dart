@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/custom_widget/login_custom_button.dart';
+import 'package:final_year_project/screens/customer_home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class AdminDashboard extends StatefulWidget {
 
 class _AdminDashboardState extends State<AdminDashboard> {
   // List<File> images = [];
-  List<String> photos = [];
+  // List<String> photos = [];
 
   List<String> listOfCategories = ['Dress', 'T-shart', 'Bags'];
 
@@ -56,7 +57,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
         _imageFile = File(pickedFile.path);
         showLocalImage = true;
       } else {
-         print('No image selected.');
+        print('No image selected.');
       }
     });
   }
@@ -66,10 +67,16 @@ class _AdminDashboardState extends State<AdminDashboard> {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          IconButton(onPressed: (){
+
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CustomerDashboard()));
+
+          }, icon:const  Icon(Icons.drive_file_move)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.person)),
         ],
         centerTitle: true,
         title: const Text('AdminDashboard'),
+
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -136,42 +143,38 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     DocumentReference productRep =
                         FirebaseFirestore.instance.collection('products').doc();
 
-                      await productRep.set({
-                        'title': _titleController.text.trim(),
-                        'category': _selectedCategory,
-                        'discrep': _descriptionController.text.trim(),
-                        'postedOn': DateTime.now().millisecondsSinceEpoch,
-                        'postedBy': FirebaseAuth.instance.currentUser!.uid,
-                        'postedByName':
-                            FirebaseAuth.instance.currentUser!.displayName,
-                      });
+                    await productRep.set({
+                      'title': _titleController.text.trim(),
+                      'category': _selectedCategory,
+                      'discrep': _descriptionController.text.trim(),
+                      'postedOn': DateTime.now().millisecondsSinceEpoch,
+                      'postedBy': FirebaseAuth.instance.currentUser!.uid,
+                      'postedByName':
+                          FirebaseAuth.instance.currentUser!.displayName,
+                      'productImageUrl': null,
+                    });
 
                     // upload image to storage
                     if (_imageFile != null) {
+                      // uplode to storage
+                      FirebaseStorage storage = FirebaseStorage.instance;
+                      var fileName = '${productRep.id}-$counter';
 
-                      await Future.forEach(_imageFile as Iterable<File>, (File image) async {
-                        String fileName = '${productRep.id}-$counter'; // Corrected the filename generation
-                        Reference reference = FirebaseStorage.instance
-                            .ref()
-                            .child('product_image')
-                            .child(fileName);
-                        UploadTask uploadTask = reference.putFile(
-                          _imageFile!,
-                          SettableMetadata(contentType: 'image/png'),
-                        );
-
-                        TaskSnapshot taskSnapshot =
-                            await uploadTask.whenComplete(() {});
-
-                        //get url of the image
-                        String url = await taskSnapshot.ref.getDownloadURL();
-                        photos.add(url);
-                        counter++;
-
-                      });
+                      UploadTask uploadTask = storage
+                          .ref()
+                          .child(fileName)
+                          .putFile(_imageFile!,
+                              SettableMetadata(contentType: 'image/png'));
+                      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
+                      //get url of the image
+                      String url = await taskSnapshot.ref.getDownloadURL();
+                      print(url);
+                      counter++;
                       // save these urls to firestore
-                      productRep.update({'productPhotos': photos});
+                      productRep.update({'productImageUrl': url});
                       Fluttertoast.showToast(msg: 'Uploaded successfully');
+
+
                     }
                   })
             ],
