@@ -22,33 +22,31 @@ class _AdminDashboardState extends State<AdminDashboard> {
   // List<String> photos = [];
   CollectionReference? productsRef;
   DocumentSnapshot? productSnapshot;
+  String? _selectedCategory;
+  List<String> listOfCategories = ['Dress', 'T-shart', 'Bags'];
+  late TextEditingController _titleController;
+  late TextEditingController _descriptionController;
 
   getProductDetails() async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
     productSnapshot =
-    await FirebaseFirestore.instance.collection('products').doc(uid).get();
+        await FirebaseFirestore.instance.collection('products').doc(uid).get();
 
-    setState(() {
-
-    });
+    setState(() {});
   }
 
-  List<String> listOfCategories = ['Dress', 'T-shart', 'Bags'];
 
-  String? _selectedCategory;
 
-  late TextEditingController _titleController;
-  late TextEditingController _descriptionController;
+
+
 
   @override
   void initState() {
     _titleController = TextEditingController();
     _descriptionController = TextEditingController();
 
-
-    productsRef = FirebaseFirestore.instance
-        .collection('products');
+    productsRef = FirebaseFirestore.instance.collection('products');
     getProductDetails();
 
     super.initState();
@@ -86,11 +84,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {
-            setState(() {
-
-            });
-          }, icon: const Icon(Icons.refresh)),
+          IconButton(
+              onPressed: () {
+                setState(() {});
+              },
+              icon: const Icon(Icons.refresh)),
           IconButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -154,82 +152,95 @@ class _AdminDashboardState extends State<AdminDashboard> {
               const Gap(16),
               _imageFile != null
                   ? Image.file(
-                _imageFile!,
-                height: 400,
-                width: 350,
-                fit: BoxFit.cover,
-              )
+                      _imageFile!,
+                      height: 400,
+                      width: 350,
+                      fit: BoxFit.cover,
+                    )
                   : Container(),
               const Gap(16),
               CustomButton(
                 text: 'Upload',
                 onTap: () async {
-                 if(_titleController != null && _imageFile != null && _descriptionController != null && _selectedCategory !=null ){
-                   DocumentReference productRep =
-                   FirebaseFirestore.instance.collection('products').doc();
+                  if (_titleController != null &&
+                      _imageFile != null &&
+                      _descriptionController != null &&
+                      _selectedCategory != null) {
+                    DocumentReference productRep =
+                        FirebaseFirestore.instance.collection('products').doc();
 
-                   await productRep.set({
-                     'title': _titleController.text.trim(),
-                     'category': _selectedCategory,
-                     'description': _descriptionController.text.trim(),
-                     'postedOn': DateTime
-                         .now()
-                         .millisecondsSinceEpoch,
-                     'postedBy': FirebaseAuth.instance.currentUser!.uid,
-                     'postedByName':
-                     FirebaseAuth.instance.currentUser!.displayName,
-                     'productImageUrl': null,
-                   });
+                    await productRep.set({
+                      'title': _titleController.text.trim(),
+                      'category': _selectedCategory,
+                      'description': _descriptionController.text.trim(),
+                      'postedOn': DateTime.now().millisecondsSinceEpoch,
+                      'postedBy': FirebaseAuth.instance.currentUser!.uid,
+                      'postedByName':
+                          FirebaseAuth.instance.currentUser!.displayName,
+                      'productImageUrl': null,
+                    });
 
-                   // upload image to storage
-                   if (_imageFile != null) {
-                     // uplode to storage
-                     FirebaseStorage storage = FirebaseStorage.instance;
-                     var fileName = '${productRep.id}-$counter';
+                    // upload image to storage
+                    if (_imageFile != null) {
+                      // uplode to storage
+                      FirebaseStorage storage = FirebaseStorage.instance;
+                      var fileName = '${productRep.id}-$counter';
 
-                     UploadTask uploadTask = storage
-                         .ref()
-                         .child(fileName)
-                         .putFile(_imageFile!,
-                         SettableMetadata(contentType: 'image/png'));
-                     TaskSnapshot taskSnapshot =
-                     await uploadTask.whenComplete(() {});
-                     //get url of the image
-                     String url = await taskSnapshot.ref.getDownloadURL();
-                     print(url);
-                     counter++;
-                     // save these urls to firestore
-                     productRep.update({'productImageUrl': url});
-                     Fluttertoast.showToast(msg: 'Uploaded successfully');
-                     setState(() {});
-                   }
-                 }else {
-                   Fluttertoast.showToast(msg: 'Pleas provide the following given filled...');
-                 }
+                      UploadTask uploadTask = storage
+                          .ref()
+                          .child(fileName)
+                          .putFile(_imageFile!,
+                              SettableMetadata(contentType: 'image/png'));
+                      TaskSnapshot taskSnapshot =
+                          await uploadTask.whenComplete(() {});
+                      //get url of the image
+                      String url = await taskSnapshot.ref.getDownloadURL();
+                      print(url);
+                      counter++;
+                      // save these urls to firestore
+                      productRep.update({'productImageUrl': url});
+                      Fluttertoast.showToast(msg: 'Uploaded successfully');
+                      setState(() {
+                        _selectedCategory;
+                        _titleController;
+
+                        _descriptionController;
+                        _imageFile;
+                      });
+                    }
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: 'Pleas provide the following given filled...');
+                  }
                 },
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               StreamBuilder<QuerySnapshot>(
                 stream: productsRef!.snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     List productsref = snapshot.data!.docs;
                     if (productsref.isEmpty) {
-                      return const  Center(
+                      return const Center(
                         child: Text('No products listed yet'),
                       );
                     }
 
                     return ListView.builder(
-                      shrinkWrap: true, // Add this line
+                      shrinkWrap: true,
+                      // Add this line
                       physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       itemCount: productsref.length,
                       itemBuilder: (context, index) {
-                        var productSnapshot = productsref[index].data() as Map<String, dynamic>;
+                        var productSnapshot =
+                            productsref[index].data() as Map<String, dynamic>;
                         return Column(
                           children: [
-                            if (productSnapshot['productImageUrl'] != null) // Ensure image URL is not null
+                            if (productSnapshot['productImageUrl'] !=
+                                null) // Ensure image URL is not null
                               SizedBox(
                                 width: double.infinity,
                                 child: Image.network(
@@ -239,21 +250,19 @@ class _AdminDashboardState extends State<AdminDashboard> {
                             const SizedBox(height: 10),
                             Text('Title: ${productSnapshot['title']}'),
                             const SizedBox(height: 10),
-                            Text('Description: ${productSnapshot['description']}'),
+                            Text(
+                                'Description: ${productSnapshot['description']}'),
                           ],
                         );
                       },
                     );
-
-
                   } else {
-                    return const  Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
                 },
               )
-
             ],
           ),
         ),
