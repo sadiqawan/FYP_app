@@ -50,6 +50,8 @@ dependencies:
   curved_navigation_bar: ^1.0.3
   carousel_slider: ^4.2.1
   url_launcher: ^6.2.5
+  cached_network_image: ^3.3.1
+  persistent_shopping_cart: ^0.0.7
 
 dev_dependencies:
   flutter_test:

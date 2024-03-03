@@ -3,6 +3,9 @@ import 'package:final_year_project/custom_tabs/home_screen_tabs/home_page_tab_al
 import 'package:final_year_project/custom_tabs/home_screen_tabs/home_page_tab_bage.dart';
 import 'package:final_year_project/custom_tabs/home_screen_tabs/home_page_tabe_dress.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_shopping_cart/persistent_shopping_cart.dart';
+
+import '../cart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,9 +24,20 @@ class _HomeScreenState extends State<HomeScreen>
         appBar: AppBar(
           actions: [
             IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.shopping_bag_outlined)),
+            PersistentShoppingCart().showCartItemCountWidget(
+              cartItemCountWidgetBuilder: (itemCount) => IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CardScreen()),
+                  );
+                },
+                icon: Badge(
+                  label:Text(itemCount.toString()) ,
+                  child: const Icon(Icons.shopping_bag_outlined),
+                ),
+              ),
+            ),
           ],
           centerTitle: true,
           title: const Text('HiFashion'),

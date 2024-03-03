@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:persistent_shopping_cart/persistent_shopping_cart.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +16,7 @@ void main() async {
           messagingSenderId: "506182906477",
           projectId: "fyp-01-a1800",
           storageBucket: "fyp-01-a1800.appspot.com"));
+  await PersistentShoppingCart().init();
 
   runApp(const MyApp());
 }
