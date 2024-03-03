@@ -1,6 +1,6 @@
 import 'package:final_year_project/custom_widget/login_custom_button.dart';
 import 'package:final_year_project/screens/customer_home_screen.dart';
-import 'package:final_year_project/screens/home_screens/home_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
