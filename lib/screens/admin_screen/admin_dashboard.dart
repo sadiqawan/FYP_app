@@ -36,11 +36,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
     setState(() {});
   }
 
-
-
-
-
-
   @override
   void initState() {
     _titleController = TextEditingController();
@@ -224,7 +219,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     List productsref = snapshot.data!.docs;
                     if (productsref.isEmpty) {
                       return const Center(
-                        child: Text('No products listed yet'),
+                        child: Column(
+                          children: [
+                            Center(child: Text('No products listed yet')),
+                            CircularProgressIndicator()
+                          ],
+                        ),
                       );
                     }
 
@@ -239,6 +239,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                             productsref[index].data() as Map<String, dynamic>;
                         return Column(
                           children: [
+
                             if (productSnapshot['productImageUrl'] !=
                                 null) // Ensure image URL is not null
                               SizedBox(

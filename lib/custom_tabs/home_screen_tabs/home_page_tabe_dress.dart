@@ -102,12 +102,14 @@ class _HomePageTabDressState extends State<HomePageTabDress> {
                                 ),
                               ),
                               product: PersistentShoppingCartItem(
-                                  productId: index.toString(),
-                                  productName: data['title'],
-                                  unitPrice: 10.0,
-                                  quantity: 1),
-
-                            )
+                                productId: products[index].id,
+                                productName: data['title'] ?? '',
+                                productDescription: data['description'],
+                                unitPrice: 10.0,
+                                quantity: 1,
+                                productThumbnail: data['productImageUrl'] ,
+                              ),
+                            ),
                           ],
                         ),
                       )

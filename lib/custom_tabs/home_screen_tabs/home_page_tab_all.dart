@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/screens/util_screen/about_screen.dart';
@@ -185,6 +186,24 @@ class _HomePageTabAllState extends State<HomePageTabAll> {
             const Divider(
               color: Colors.black,
             ),
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width * 0.9,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    image: AssetImage('images/img.png'),
+                  )),
+            ),
+
+            // CachedNetworkImage(
+            //   fit: BoxFit.cover,
+            //   height: MediaQuery.of(context).size.height * 0.4,
+            //   width: MediaQuery.of(context).size.width * 0.9,
+            //   imageUrl: ,
+            // ),
+
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
