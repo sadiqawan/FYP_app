@@ -117,14 +117,18 @@ class _HomePageTabBageState extends State<HomePageTabBage> {
                                     ),
                                     product: PersistentShoppingCartItem(
                                         productId: index.toString(),
-                                        productName: data['title'],
+                                        productName: data[index]['title'],
+                                        productDescription: data[index]['description'],
                                         unitPrice: 10.0,
-                                        quantity: 1),
+                                        quantity: 1,
+                                      productThumbnail: data[index]['productImageUrl'],
+
+                                    ),
 
                             )
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
