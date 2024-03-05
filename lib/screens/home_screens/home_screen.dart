@@ -2,6 +2,7 @@ import 'package:final_year_project/custom_tabs/home_screen_tabs/home_page_tab_Ts
 import 'package:final_year_project/custom_tabs/home_screen_tabs/home_page_tab_all.dart';
 import 'package:final_year_project/custom_tabs/home_screen_tabs/home_page_tab_bage.dart';
 import 'package:final_year_project/custom_tabs/home_screen_tabs/home_page_tabe_dress.dart';
+import 'package:final_year_project/custom_widget/custom_darawer.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_shopping_cart/persistent_shopping_cart.dart';
 
@@ -48,10 +49,8 @@ class _HomeScreenState extends State<HomeScreen>
             Tab(text: 'Bags'),
           ]),
         ),
-        drawer: Drawer(
-          child: ListView(
-            children: const [],
-          ),
+        drawer:const  Drawer(
+          child:  CustomDrawer()
         ),
         body: const TabBarView(
           children: [

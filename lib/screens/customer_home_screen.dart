@@ -17,7 +17,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
   List<Widget> pages = [
     const HomeScreen(),
     const BlogScreen(),
-     FavoriteScreen(favorites: favorites),
+    const FavoriteScreen(),
     const MyAccount()
   ];
 

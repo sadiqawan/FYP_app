@@ -2,16 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({Key? key, required this.favorites}) : super(key: key);
 
-  final Set<String> favorites;
+  final favorites;
+  const FavoriteScreen({Key? key,  this.favorites}) : super(key: key);
+
+
 
   @override
   _FavoriteScreenState createState() => _FavoriteScreenState();
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  late CollectionReference productsRef;
+   CollectionReference? productsRef;
 
   @override
   void initState() {
@@ -26,7 +28,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         title: const Text('Favorites'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: productsRef.snapshots(),
+        stream: productsRef!.snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
@@ -44,7 +46,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 .toList();
             return Padding(
               padding: const EdgeInsets.all(13.0),
-              child: ListView.builder(
+              child:  ListView.builder(
                 itemCount: favoriteProducts.length,
                 itemBuilder: (context, index) {
                   var data = favoriteProducts[index];

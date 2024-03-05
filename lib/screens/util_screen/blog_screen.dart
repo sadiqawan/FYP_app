@@ -14,7 +14,7 @@ class BlogScreen extends StatefulWidget {
 
 class _BlogScreenState extends State<BlogScreen> {
   CollectionReference? productsRef;
-  Set<String> favorites = Set<String>(); // Set to store favorite product IDs
+  Set<String> favorites = <String>{}; // Set to store favorite product IDs
 
   @override
   void initState() {
