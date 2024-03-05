@@ -6,6 +6,9 @@ import 'package:final_year_project/screens/util_screen/profile_screen.dart';
 import 'package:final_year_project/screens/util_screen/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:persistent_shopping_cart/persistent_shopping_cart.dart';
+
+import '../cart_screen.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
@@ -21,8 +24,20 @@ class _MyAccountState extends State<MyAccount> {
       appBar: AppBar(
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-          IconButton(
-              onPressed: () {}, icon: const Icon(Icons.shopping_bag_outlined)),
+          PersistentShoppingCart().showCartItemCountWidget(
+            cartItemCountWidgetBuilder: (itemCount) => IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CardScreen()),
+                );
+              },
+              icon: Badge(
+                label: Text(itemCount.toString()),
+                child: const Icon(Icons.shopping_bag_outlined),
+              ),
+            ),
+          ),
         ],
         centerTitle: true,
         title: const Text('HiFashion'),
@@ -47,6 +62,7 @@ class _MyAccountState extends State<MyAccount> {
               SizedBox(
                 height: 400,
                 child: GridView(
+                    physics: const NeverScrollableScrollPhysics(),
                     padding: const EdgeInsets.only(top: 15),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -56,14 +72,16 @@ class _MyAccountState extends State<MyAccount> {
                         text: 'SETTING',
                         icon: Icons.settings,
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingScreen()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const SettingScreen()));
                         },
                       ),
                       MyAccountButton(
                         text: 'PROFILE',
                         icon: Icons.person,
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  const ProfileScreen()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const ProfileScreen()));
                         },
                       ),
                       MyAccountButton(

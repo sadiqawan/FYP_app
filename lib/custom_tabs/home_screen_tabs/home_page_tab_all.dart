@@ -183,17 +183,42 @@ class _HomePageTabAllState extends State<HomePageTabAll> {
                 textStyle: const TextStyle(color: Colors.white),
               ),
             ),
+            SizedBox(height: 20,),
             const Divider(
               color: Colors.black,
             ),
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width * 0.9,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  image: DecorationImage(
-                    image: AssetImage('images/img.png'),
-                  )),
+            const Center(
+              child: Text(
+                'COLLECTION',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                ),
+              ),
+            ),
+            const Divider(
+              color: Colors.black,
+            ),
+            Row(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height* 0.2,
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      image: const DecorationImage(
+                        image: AssetImage('images/s3.png'),
+                      )),
+                ),Container(
+                  height: MediaQuery.of(context).size.height* 0.2,
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      image: const DecorationImage(
+                        image: AssetImage('images/s2.png'),
+                      )),
+                ),
+              ],
             ),
 
             // CachedNetworkImage(

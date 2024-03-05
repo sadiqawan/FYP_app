@@ -14,47 +14,49 @@ class HomeSplashScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text('HiFashion',style: TextStyle(fontWeight: FontWeight.bold),),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('images/homeScreenImage.png'),
-                fit: BoxFit.cover)),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.2,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  'Luxury\n Fashion\n & Accessories',
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.w800,
-                    fontFamily: GoogleFonts.bodoniModa().fontFamily,
-                    fontStyle: FontStyle.italic,
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('images/homeScreenImage.png'),
+                  fit: BoxFit.cover)),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.2,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Text(
+                    'Luxury\n Fashion\n & Accessories',
+                    style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.w800,
+                      fontFamily: GoogleFonts.bodoniModa().fontFamily,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.3,
-              ),
-              CustomButton(
-                text: 'EXPLORE COLLECTION',
-                onTap: () {
-                  // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const NewArrivalScreen1()));
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                    return CustomerDashboard();
-                  }));
-                },
-                backgroundColor: Colors.black,
-                textStyle: const TextStyle(color: Colors.white),
-              ),
-            ],
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.3,
+                ),
+                CustomButton(
+                  text: 'EXPLORE COLLECTION',
+                  onTap: () {
+                    // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const NewArrivalScreen1()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                      return CustomerDashboard();
+                    }));
+                  },
+                  backgroundColor: Colors.black,
+                  textStyle: const TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
           ),
         ),
       ),

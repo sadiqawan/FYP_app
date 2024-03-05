@@ -1,9 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:final_year_project/screens/home_screens/favrite_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:final_year_project/screens/home_screens/favrite_screen.dart';
 
 class BlogScreen extends StatefulWidget {
   const BlogScreen({Key? key}) : super(key: key);
@@ -14,7 +12,7 @@ class BlogScreen extends StatefulWidget {
 
 class _BlogScreenState extends State<BlogScreen> {
   CollectionReference? productsRef;
-  Set<String> favorites = <String>{}; // Set to store favorite product IDs
+  Set<String> favorites = {}; // Set to store favorite product IDs
 
   @override
   void initState() {
@@ -65,14 +63,16 @@ class _BlogScreenState extends State<BlogScreen> {
                 itemBuilder: (context, index) {
                   var data = products[index].data() as Map<String, dynamic>;
                   String productId = products[index].id;
-                  bool isFavorite = favorites.contains(productId); // Check if the product is favorited
+                  bool isFavorite = favorites
+                      .contains(productId); // Check if the product is favorited
                   return Column(
                     children: [
                       CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          height: MediaQuery.of(context).size.height * 0.4,
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          imageUrl: data['productImageUrl'] as String),
+                        fit: BoxFit.cover,
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        imageUrl: data['productImageUrl'] as String,
+                      ),
                       const SizedBox(height: 10),
                       Container(
                         color: Colors.black12,
@@ -103,7 +103,6 @@ class _BlogScreenState extends State<BlogScreen> {
                               child: IconButton(
                                 onPressed: () {
                                   _toggleFavorite(productId);
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => FavoriteScreen(favorites: favorites)));// Toggle favorite status on button press
                                 },
                                 icon: Icon(
                                   isFavorite
@@ -132,4 +131,3 @@ class _BlogScreenState extends State<BlogScreen> {
     );
   }
 }
-

@@ -6,7 +6,8 @@ class CustomButton extends StatelessWidget {
  final String  text;
  final Color? backgroundColor;
  final TextStyle? textStyle;
-  const CustomButton({super.key, required this.text, this.icon, required this.onTap , this.backgroundColor,this.textStyle});
+ final Color? IconColor;
+  const CustomButton({super.key, required this.text, this.icon, required this.onTap , this.backgroundColor,this.textStyle, this.IconColor});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class CustomButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon),
+            Icon(icon,color: IconColor,),
             const SizedBox(width: 10,),
             Text(text, style: textStyle)
           ],

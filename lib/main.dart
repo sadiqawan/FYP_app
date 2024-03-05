@@ -46,9 +46,14 @@ class MyApp extends StatelessWidget {
               user.email == 'awansadiq09@gmail.com' &&
               user.emailVerified) {
             return const AdminDashboard();
-          } else if (user != null && user.emailVerified) {
+
+           }
+          if(user != null && user.emailVerified){
             return const HomeSplashScreen();
-          } else {
+          }
+          //else if (user != null && user.emailVerified) {
+          //
+           else{
             return const LoginScreen();
           }
         },
