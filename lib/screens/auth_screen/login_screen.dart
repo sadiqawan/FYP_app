@@ -29,8 +29,40 @@ class _LoginScreenState extends State<LoginScreen> {
           ]),
         ),
         drawer: Drawer(
-          child: ListView(
-            children: const [],
+        child:   ListView(
+            children: [
+              DrawerHeader(
+                padding: EdgeInsets.zero,
+                child: Container(
+                  color: Colors.black,
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'HiFashion',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+
+
+              Divider(),
+              ListTile(
+                leading: const Icon(Icons.email_outlined),
+                title: const Text('support@email.com'),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.location_on_outlined),
+                title: const Text('Store Collection'),
+                onTap: () {},
+              ),
+            ],
           ),
         ),
         body: const TabBarView(

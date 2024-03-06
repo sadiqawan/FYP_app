@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'FYP',
+      title: 'HiFashion',
       theme: ThemeData(
         fontFamily: GoogleFonts.tenorSans().fontFamily,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -43,14 +43,13 @@ class MyApp extends StatelessWidget {
           }
           final user = snapshot.data;
           if (user != null &&
-              user.email == 'awansadiq09@gmail.com' &&
-              user.emailVerified) {
+              user.email == 'awansadiq09@gmail.com') {
             return const AdminDashboard();
 
-           }
-          if(user != null && user.emailVerified){
+           }else if(user != null && user.emailVerified){
             return const HomeSplashScreen();
           }
+
           //else if (user != null && user.emailVerified) {
           //
            else{
