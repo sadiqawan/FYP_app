@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:persistent_shopping_cart/persistent_shopping_cart.dart';
 import 'package:provider/provider.dart';
 import 'package:final_year_project/provider_classes/favorite_provider.dart';
+
+import '../../custom_widget/custom_darawer.dart';
+import '../cart_screen.dart';
 
 class BlogScreen extends StatefulWidget {
   const BlogScreen({Key? key}) : super(key: key);
@@ -23,20 +27,35 @@ class _BlogScreenState extends State<BlogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FavoriteProvider>(
-      builder: (context, value, child) {
-        return Scaffold(
-          appBar: AppBar(
-            actions: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.shopping_bag_outlined)),
-            ],
-            centerTitle: true,
-            title: const Text('HiFashion'),
-          ),
-          body: FutureBuilder<QuerySnapshot>(
+    return Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+            PersistentShoppingCart().showCartItemCountWidget(
+              cartItemCountWidgetBuilder: (itemCount) => IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CardScreen()),
+                  );
+                },
+                icon: Badge(
+                  label:Text(itemCount.toString()) ,
+                  child: const Icon(Icons.shopping_bag_outlined),
+                ),
+              ),
+            ),
+          ],
+          centerTitle: true,
+          title: const Text('BLOG'),
+
+        ),
+        drawer:const  Drawer(
+            child:  CustomDrawer()
+        ),
+      body: Consumer<FavoriteProvider>(
+        builder: (context, value, child) {
+          return FutureBuilder<QuerySnapshot>(
             future: productsFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -73,7 +92,7 @@ class _BlogScreenState extends State<BlogScreen> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
                                         child: Text(
@@ -93,18 +112,18 @@ class _BlogScreenState extends State<BlogScreen> {
                                 ),
                                 Expanded(
                                     child: IconButton(
-                                  onPressed: () {
-                                    value.favoriteItem.contains(index)
-                                        ? value.removeFavorite(index)
-                                        : value.setFavorite(index);
-                                  },
-                                  icon: Icon(
-                                    value.favoriteItem.contains(index)
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    color: Colors.red,
-                                  ),
-                                ))
+                                      onPressed: () {
+                                        value.favoriteItem.contains(index)
+                                            ? value.removeFavorite(index)
+                                            : value.setFavorite(index);
+                                      },
+                                      icon: Icon(
+                                        value.favoriteItem.contains(index)
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color: Colors.red,
+                                      ),
+                                    ))
                               ],
                             ),
                           ),
@@ -121,9 +140,9 @@ class _BlogScreenState extends State<BlogScreen> {
                 );
               }
             },
-          ),
-        );
-      },
+          );
+        },
+      )
     );
   }
 }

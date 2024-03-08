@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:persistent_shopping_cart/persistent_shopping_cart.dart';
 import 'package:provider/provider.dart';
 
+import '../../custom_widget/custom_darawer.dart';
 import '../../provider_classes/favorite_provider.dart';
+import '../cart_screen.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({
@@ -26,20 +29,35 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FavoriteProvider>(
-      builder: (context, value, child) {
-        return Scaffold(
-          appBar: AppBar(
-            actions: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.shopping_bag_outlined)),
-            ],
-            centerTitle: true,
-            title: const Text('HiFashion'),
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+          PersistentShoppingCart().showCartItemCountWidget(
+            cartItemCountWidgetBuilder: (itemCount) => IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CardScreen()),
+                );
+              },
+              icon: Badge(
+                label:Text(itemCount.toString()) ,
+                child: const Icon(Icons.shopping_bag_outlined),
+              ),
+            ),
           ),
-          body: StreamBuilder<QuerySnapshot>(
+        ],
+        centerTitle: true,
+        title: const Text('FAVORITE ITEMS'),
+
+      ),
+      drawer:const  Drawer(
+          child:  CustomDrawer()
+      ),
+      body: Consumer<FavoriteProvider>(
+        builder: (context, value, child) {
+          return StreamBuilder<QuerySnapshot>(
             stream: productsRef!.snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
@@ -58,7 +76,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       itemCount: value.favoriteItem.length,
                       itemBuilder: (context, index) {
                         var data =
-                            products[index].data() as Map<String, dynamic>;
+                        products[index].data() as Map<String, dynamic>;
 
                         return Column(
                           children: [
@@ -77,7 +95,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         Expanded(
                                           child: Text(
@@ -124,9 +142,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 );
               }
             },
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

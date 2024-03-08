@@ -18,12 +18,12 @@ class _RegisterTabState extends State<RegisterTab> {
   String? emailC, passwordC, nameC;
   bool obscureText = true;
 
- @override
+  @override
   void initState() {
-  emailC;
-  passwordC;
-  nameC;
-  obscureText;
+    emailC;
+    passwordC;
+    nameC;
+    obscureText;
     super.initState();
   }
 
@@ -64,10 +64,8 @@ class _RegisterTabState extends State<RegisterTab> {
                   height: 25,
                 ),
                 TextFormField(
-
-                  decoration: const InputDecoration(hintText: 'First name',
-                  prefixIcon: Icon(Icons.person)
-                  ),
+                  decoration: const InputDecoration(
+                      hintText: 'First name', prefixIcon: Icon(Icons.person)),
                   validator: (text) {
                     if (text == null || text.isEmpty) {
                       return 'Please provide name';
@@ -120,8 +118,6 @@ class _RegisterTabState extends State<RegisterTab> {
                 const SizedBox(
                   height: 15,
                 ),
-                TextButton(
-                    onPressed: () {}, child: const Text('Forgot password?')),
                 const SizedBox(
                   height: 15,
                 ),

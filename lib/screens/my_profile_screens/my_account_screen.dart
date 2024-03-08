@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persistent_shopping_cart/persistent_shopping_cart.dart';
 
+import '../../custom_widget/custom_darawer.dart';
 import '../cart_screen.dart';
 
 class MyAccount extends StatefulWidget {
@@ -33,14 +34,17 @@ class _MyAccountState extends State<MyAccount> {
                 );
               },
               icon: Badge(
-                label: Text(itemCount.toString()),
+                label:Text(itemCount.toString()) ,
                 child: const Icon(Icons.shopping_bag_outlined),
               ),
             ),
           ),
         ],
-        centerTitle: true,
-        title: const Text('HiFashion'),
+
+
+      ),
+      drawer:const  Drawer(
+          child:  CustomDrawer()
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -65,8 +69,8 @@ class _MyAccountState extends State<MyAccount> {
                     physics: const NeverScrollableScrollPhysics(),
                     padding: const EdgeInsets.only(top: 15),
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
                     children: [
                       MyAccountButton(
                         text: 'SETTING',
