@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
 
-              Divider(),
+            const  Divider(),
               ListTile(
                 leading: const Icon(Icons.email_outlined),
                 title: const Text('support@email.com'),

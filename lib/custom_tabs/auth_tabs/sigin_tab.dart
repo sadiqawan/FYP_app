@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../custom_widget/login_custom_button.dart';
+import '../../screens/auth_screen/forget_password.dart';
 
 class SignInTab extends StatefulWidget {
   const SignInTab({super.key});
@@ -102,7 +103,11 @@ class _SignInTabState extends State<SignInTab> {
                   height: 25,
                 ),
                 TextButton(
-                    onPressed: () {}, child: const Text('Forgot password?')),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                        return const ForgotPasswordScreen();
+                      }));
+                    }, child: const Text('Forgot password?')),
                 const SizedBox(
                   height: 30,
                 ),
