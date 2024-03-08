@@ -25,108 +25,107 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-          IconButton(
-              onPressed: () {}, icon: const Icon(Icons.shopping_bag_outlined)),
-        ],
-        centerTitle: true,
-        title: const Text('HiFashion'),
-      ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: productsRef!.snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
-            List<QueryDocumentSnapshot> products = snapshot.data!.docs;
-            return Padding(
-                padding: const EdgeInsets.all(13.0),
-                child: Consumer<FavoriteProvider>(
-                    builder: (context, value, child) {
-                  return ListView.builder(
-                    itemCount: value.favoriteItem.length,
-                    itemBuilder: (context, index) {
-                      var data = products[index].data() as Map<String, dynamic>;
+    return Consumer<FavoriteProvider>(
+      builder: (context, value, child) {
+        return Scaffold(
+          appBar: AppBar(
+            actions: [
+              IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.shopping_bag_outlined)),
+            ],
+            centerTitle: true,
+            title: const Text('HiFashion'),
+          ),
+          body: StreamBuilder<QuerySnapshot>(
+            stream: productsRef!.snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                List<QueryDocumentSnapshot> products = snapshot.data!.docs;
+                return Padding(
+                    padding: const EdgeInsets.all(13.0),
+                    child: ListView.builder(
+                      itemCount: value.favoriteItem.length,
+                      itemBuilder: (context, index) {
+                        var data =
+                            products[index].data() as Map<String, dynamic>;
 
-                      return Column(
-                        children: [
-                          CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            height: MediaQuery.of(context).size.height * 0.4,
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            imageUrl: data['productImageUrl'] as String,
-                          ),
-                          const SizedBox(height: 10),
-                          Container(
-                            color: Colors.black12,
-                            height: 60,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          'Title: ${data['title']}',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
+                        return Column(
+                          children: [
+                            CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              imageUrl: data['productImageUrl'] as String,
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                              color: Colors.black12,
+                              height: 60,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            'Title: ${data['title']}',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          'Description: ${data['Description']}',
-                                          overflow: TextOverflow.ellipsis,
+                                        Expanded(
+                                          child: Text(
+                                            'Description: ${data['Description']}',
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: IconButton(
-                                    onPressed: () {
-                                      if (value.favoriteItem.contains(index)) {
-                                        context
-                                            .read<FavoriteProvider>()
-                                            .removeFavorite(index);
-                                      } else {
-                                        context
-                                            .read<FavoriteProvider>()
-                                            .setFavorite(index);
-                                      }
-                                    },
-                                    icon: Icon(
+                                  Expanded(
+                                    child: IconButton(
+                                      onPressed: () {
+                                        value.favoriteItem.contains(index)
+                                            ? value.removeFavorite(index)
+                                            : value.setFavorite(index);
+                                      },
+                                      icon: Icon(
                                         value.favoriteItem.contains(index)
                                             ? Icons.favorite
-                                            : Icons.favorite_border,color: Colors.red,),
-                                  ),
-                                )
-                              ],
+                                            : Icons.favorite_border,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                        ],
-                      );
-                    },
-                  );
-                }));
-          } else {
-            return const Center(
-              child: Text('No data available.'),
-            );
-          }
-        },
-      ),
+                            const SizedBox(height: 10),
+                          ],
+                        );
+                      },
+                    ));
+              } else {
+                return const Center(
+                  child: Text('No data available.'),
+                );
+              }
+            },
+          ),
+        );
+      },
     );
   }
 }
