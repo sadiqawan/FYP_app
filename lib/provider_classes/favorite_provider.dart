@@ -1,15 +1,19 @@
 import 'package:flutter/foundation.dart';
 
 class FavoriteProvider extends ChangeNotifier {
-  List<int> favoriteItem = [];
+  List<int> _favoriteItem = [];
+
+  List<int> get favoriteItem => _favoriteItem;
 
   void setFavorite(int value) {
-    favoriteItem.add(value);
-    notifyListeners();
+    if (!_favoriteItem.contains(value)) {
+      _favoriteItem.add(value);
+      notifyListeners();
+    }
   }
 
   void removeFavorite(int value) {
-    favoriteItem.remove(value);
+    _favoriteItem.remove(value);
     notifyListeners();
   }
 }
