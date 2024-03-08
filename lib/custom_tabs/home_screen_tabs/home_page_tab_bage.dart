@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:persistent_shopping_cart/model/cart_model.dart';
 import 'package:persistent_shopping_cart/persistent_shopping_cart.dart';
 
@@ -32,7 +33,7 @@ class _HomePageTabBageState extends State<HomePageTabBage> {
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child:SpinKitSpinningLines(color: Colors.black),
           );
         }
         if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {

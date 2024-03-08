@@ -6,6 +6,7 @@ import 'package:final_year_project/screens/customer_home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:gap/gap.dart';
@@ -190,7 +191,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                           await uploadTask.whenComplete(() {});
                       //get url of the image
                       String url = await taskSnapshot.ref.getDownloadURL();
-                      print(url);
+
                       counter++;
                       // save these urls to firestore
                       productRep.update({'productImageUrl': url});
@@ -222,7 +223,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         child: Column(
                           children: [
                             Center(child: Text('No products listed yet')),
-                            CircularProgressIndicator()
+                  SpinKitSpinningLines(color: Colors.black)
                           ],
                         ),
                       );
@@ -244,7 +245,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                 null) // Ensure image URL is not null
                               SizedBox(
                                 width: double.infinity,
-                                child: Image.network(
+                                child:  productSnapshot.isEmpty ? const SpinKitSpinningLines(color: Colors.black):
+                                Image.network(
                                   productSnapshot['productImageUrl'] as String,
                                 ),
                               ),
@@ -259,7 +261,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                     );
                   } else {
                     return const Center(
-                      child: CircularProgressIndicator(),
+                      child: SpinKitSpinningLines(color: Colors.black,)
                     );
                   }
                 },

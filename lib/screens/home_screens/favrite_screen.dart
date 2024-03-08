@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider_classes/favorite_provider.dart';
@@ -46,7 +47,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: SpinKitSpinningLines(color: Colors.black),
                 );
               }
               if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {

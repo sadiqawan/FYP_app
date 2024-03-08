@@ -1,10 +1,7 @@
 import 'package:final_year_project/custom_tabs/home_screen_tabs/home_page_tab_bage.dart';
 import 'package:final_year_project/custom_tabs/home_screen_tabs/home_page_tabe_dress.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 import '../screens/auth_screen/login_screen.dart';
 import '../screens/home_screens/home_screen.dart';
 
@@ -43,7 +40,8 @@ class CustomDrawer extends StatelessWidget {
                       child: TextButton(
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => HomePageTabDress()));
+                                builder: (context) =>
+                                    const HomePageTabDress()));
                           },
                           child: const Text('Dresses'))),
                 ],
@@ -54,7 +52,7 @@ class CustomDrawer extends StatelessWidget {
                       child: TextButton(
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => HomePageTabBage()));
+                                builder: (context) => const HomePageTabBage()));
                           },
                           child: const Text('Bags'))),
                 ],
@@ -65,7 +63,7 @@ class CustomDrawer extends StatelessWidget {
                       child: TextButton(
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
+                                builder: (context) => const HomeScreen()));
                           },
                           child: const Text('T-shart'))),
                 ],
@@ -116,7 +114,9 @@ class CustomDrawer extends StatelessWidget {
                       content: const Row(
                         children: [
                           Icon(Icons.logout),
-                          SizedBox(width: 10,),
+                          SizedBox(
+                            width: 10,
+                          ),
                           Text('Are you sure to logout')
                         ],
                       ),
@@ -146,6 +146,5 @@ class CustomDrawer extends StatelessWidget {
         ],
       ),
     );
-    ;
   }
 }

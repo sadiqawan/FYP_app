@@ -1,9 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/screens/util_screen/blog_screen.dart';
 import 'package:final_year_project/screens/my_profile_screens/my_account_screen.dart';
-
 import 'home_screens/favrite_screen.dart';
 import 'home_screens/home_screen.dart';
 

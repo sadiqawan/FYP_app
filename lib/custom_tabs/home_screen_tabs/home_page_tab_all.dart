@@ -1,12 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/screens/util_screen/about_screen.dart';
 import 'package:final_year_project/screens/util_screen/blog_screen.dart';
 import 'package:final_year_project/screens/util_screen/contact_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:final_year_project/screens/util_screen/explore_more_screen.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../custom_widget/login_custom_button.dart';
@@ -53,7 +54,7 @@ class _HomePageTabAllState extends State<HomePageTabAll> {
                 }
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: SpinKitSpinningLines(color: Colors.black),
                   );
                 }
                 if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
@@ -75,13 +76,17 @@ class _HomePageTabAllState extends State<HomePageTabAll> {
                         child: Column(
                           children: [
                             const SizedBox(height: 10),
-                            Text('Title: ${data['title']}'),
+                            Text(
+                              '${data['title']}',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
                           ],
                         ),
                       );
                     }).toList(),
                     options: CarouselOptions(
-                      height: 400,
+                      height: 340,
                       aspectRatio: 16 / 9,
                       viewportFraction: 0.8,
                       initialPage: 0,
@@ -125,7 +130,7 @@ class _HomePageTabAllState extends State<HomePageTabAll> {
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
-                      child: CircularProgressIndicator(),
+                      child: SpinKitSpinningLines(color: Colors.black),
                     );
                   }
                   if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
@@ -156,9 +161,15 @@ class _HomePageTabAllState extends State<HomePageTabAll> {
                                   ),
                                 ),
                               ),
+
                               Expanded(
-                                flex: 0,
-                                child: Text('Title: $title'),
+                                flex: 1,
+                                child: Text(
+                                  title,
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                               //
                             ],
@@ -178,12 +189,17 @@ class _HomePageTabAllState extends State<HomePageTabAll> {
               padding: const EdgeInsets.all(15.0),
               child: CustomButton(
                 text: 'EXPLORE MORE',
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ExploreMoreScreen()));
+                },
                 backgroundColor: Colors.black,
                 textStyle: const TextStyle(color: Colors.white),
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             const Divider(
               color: Colors.black,
             ),
@@ -202,15 +218,17 @@ class _HomePageTabAllState extends State<HomePageTabAll> {
             Row(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height* 0.2,
+                  height: MediaQuery.of(context).size.height * 0.2,
                   width: MediaQuery.of(context).size.width * 0.4,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      image: const DecorationImage(
-                        image: AssetImage('images/s3.png'),
-                      )),
-                ),Container(
-                  height: MediaQuery.of(context).size.height* 0.2,
+                    borderRadius: BorderRadius.circular(20),
+                    image: const DecorationImage(
+                      image: AssetImage('images/s3.png'),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.2,
                   width: MediaQuery.of(context).size.width * 0.4,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),

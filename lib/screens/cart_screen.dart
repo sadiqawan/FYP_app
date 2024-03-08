@@ -39,8 +39,17 @@ class _CardScreenState extends State<CardScreen> {
                       CachedNetworkImage(
                         height: 100,
                         width: 100,
-                        imageUrl: data.productImages.toString(),
+                        imageUrl: data.productImages != null
+                            ? data.productImages.toString()
+                            : 'https://thenounproject.com/icon/empty-checkbox-117010/',
+                        placeholder: (context, url) => Container(
+                          width: 100,
+                          height: 100,
+                          color: Colors.black, // Placeholder color
+                        ),
                       ),
+
+
                       const SizedBox(
                         width: 10,
                       ),

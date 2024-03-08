@@ -129,20 +129,4 @@ class _HomePageTabDressState extends State<HomePageTabDress> {
   }
 }
 
-// Column(
-// children: [
-// Container(
-// margin: const EdgeInsets.all(8.0),
-//
-// child: Image(image: NetworkImage(data['productImageUrl'] as String),)
-//
-// // You may want to adjust the width of the container based on your needs
-// ),
-// const SizedBox(height: 10),
-// Text('Title: ${data['title']}'),
-//
-// const SizedBox(height: 10),
-// Text('Description: ${data['Description']}'),
-//
-// ],
-// );
+

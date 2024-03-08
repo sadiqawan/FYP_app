@@ -5,7 +5,7 @@ import 'package:final_year_project/screens/home_screens/home_splash_screen.dart'
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_shopping_cart/persistent_shopping_cart.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'HiFashion',
         theme: ThemeData(
-          // fontFamily: GoogleFonts.tenorSans().fontFamily,
+          fontFamily: GoogleFonts.tenorSans().fontFamily,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
@@ -53,11 +53,7 @@ class MyApp extends StatelessWidget {
               return const AdminDashboard();
             } else if (user != null && user.emailVerified) {
               return const HomeSplashScreen();
-            }
-
-            //else if (user != null && user.emailVerified) {
-            //
-            else {
+            } else {
               return const LoginScreen();
             }
           },
