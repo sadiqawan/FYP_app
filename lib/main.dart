@@ -1,3 +1,4 @@
+import 'package:final_year_project/provider_classes/favorite_provider.dart';
 import 'package:final_year_project/screens/admin_screen/admin_dashboard.dart';
 import 'package:final_year_project/screens/auth_screen/login_screen.dart';
 import 'package:final_year_project/screens/home_screens/home_splash_screen.dart';
@@ -6,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_shopping_cart/persistent_shopping_cart.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,36 +28,39 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'HiFashion',
-      theme: ThemeData(
-        fontFamily: GoogleFonts.tenorSans().fontFamily,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Scaffold(
-                body: Center(child: CircularProgressIndicator()));
-          }
-          final user = snapshot.data;
-          if (user != null &&
-              user.email == 'awansadiq09@gmail.com') {
-            return const AdminDashboard();
+    return MultiProvider(
+      providers: [
+        Provider(create: (context) => FavoriteProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'HiFashion',
+        theme: ThemeData(
+          fontFamily: GoogleFonts.tenorSans().fontFamily,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                  body: Center(child: CircularProgressIndicator()));
+            }
+            final user = snapshot.data;
+            if (user != null && user.email == 'awansadiq09@gmail.com') {
+              return const AdminDashboard();
+            } else if (user != null && user.emailVerified) {
+              return const HomeSplashScreen();
+            }
 
-           }else if(user != null && user.emailVerified){
-            return const HomeSplashScreen();
-          }
-
-          //else if (user != null && user.emailVerified) {
-          //
-           else{
-            return const LoginScreen();
-          }
-        },
+            //else if (user != null && user.emailVerified) {
+            //
+            else {
+              return const LoginScreen();
+            }
+          },
+        ),
       ),
     );
   }

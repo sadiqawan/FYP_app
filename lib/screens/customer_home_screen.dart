@@ -18,7 +18,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
   final List<Widget> pages = [
     const HomeScreen(),
     const BlogScreen(),
-    const FavoriteScreen(), // Importing and using FavoriteScreen only once
+    const FavoriteScreen(),
     const MyAccount(),
   ];
 

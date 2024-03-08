@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:final_year_project/screens/home_screens/favrite_screen.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
+import 'package:final_year_project/provider_classes/favorite_provider.dart';
 
 class BlogScreen extends StatefulWidget {
   const BlogScreen({Key? key}) : super(key: key);
@@ -11,24 +13,12 @@ class BlogScreen extends StatefulWidget {
 }
 
 class _BlogScreenState extends State<BlogScreen> {
-  CollectionReference? productsRef;
-  Set<String> favorites = {}; // Set to store favorite product IDs
+  Future<QuerySnapshot>? productsFuture;
 
   @override
   void initState() {
     super.initState();
-    productsRef = FirebaseFirestore.instance.collection('products');
-  }
-
-  // Function to toggle favorite status
-  void _toggleFavorite(String productId) {
-    setState(() {
-      if (favorites.contains(productId)) {
-        favorites.remove(productId);
-      } else {
-        favorites.add(productId);
-      }
-    });
+    productsFuture = FirebaseFirestore.instance.collection('products').get();
   }
 
   @override
@@ -43,16 +33,16 @@ class _BlogScreenState extends State<BlogScreen> {
         centerTitle: true,
         title: const Text('HiFashion'),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: productsRef!.snapshots(),
+      body: FutureBuilder<QuerySnapshot>(
+        future: productsFuture,
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitSpinningLines(color: Colors.black),
             );
+          }
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
           }
           if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
             List<QueryDocumentSnapshot> products = snapshot.data!.docs;
@@ -62,68 +52,78 @@ class _BlogScreenState extends State<BlogScreen> {
                 itemCount: products.length,
                 itemBuilder: (context, index) {
                   var data = products[index].data() as Map<String, dynamic>;
-                  String productId = products[index].id;
-                  bool isFavorite = favorites
-                      .contains(productId); // Check if the product is favorited
-                  return Column(
-                    children: [
-                      CachedNetworkImage(
-                        fit: BoxFit.cover,
-                        height: MediaQuery.of(context).size.height * 0.4,
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        imageUrl: data['productImageUrl'] as String,
-                      ),
-                      const SizedBox(height: 10),
-                      Container(
-                        color: Colors.black12,
-                        height: 60,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'Title: ${data['title']}',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
+
+                  return Consumer<FavoriteProvider>(
+                      builder: (context, value, child) {
+                    return Column(
+                      children: [
+                        CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          height: MediaQuery.of(context).size.height * 0.4,
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          imageUrl: data['productImageUrl'] as String,
+                        ),
+                        const SizedBox(height: 10),
+                        Container(
+                          color: Colors.black12,
+                          height: 60,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Title: ${data['title']}',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'Description: ${data['Description']}',
-                                      overflow: TextOverflow.ellipsis,
+                                    Expanded(
+                                      child: Text(
+                                        'Description: ${data['Description']}',
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: IconButton(
-                                onPressed: () {
-                                  _toggleFavorite(productId);
-                                },
-                                icon: Icon(
-                                  isFavorite
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  color: isFavorite ? Colors.red : null,
+                                  ],
                                 ),
                               ),
-                            )
-                          ],
+                              Expanded(
+                                child: IconButton(
+                                  onPressed: () {
+                                    if (value.favoriteItem.contains(index)) {
+                                      context
+                                          .read<FavoriteProvider>()
+                                          .removeFavorite(index);
+                                    } else {
+                                      context
+                                          .read<FavoriteProvider>()
+                                          .setFavorite(index);
+                                    }
+                                  },
+                                  icon: Icon(
+                                    value.favoriteItem.contains(index)
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                    ],
-                  );
+                        const SizedBox(height: 10),
+                      ],
+                    );
+                  });
                 },
               ),
             );
           } else {
+            // Show circular progress indicator when no data is available
             return const Center(
-              child: Text('No data available.'),
+              child: Text('No data found'),
             );
           }
         },
